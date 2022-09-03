@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:pockets/controller/hive/boxes.dart';
 import 'package:pockets/model/hive/account.dart';
-import 'package:pockets/view/account/accounts.dart';
+import 'package:pockets/view/account/account_screen.dart';
+import 'package:pockets/view/model/pockets_account_hero.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,33 +28,28 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            MaterialButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AccountScreen(),
-                  ),
-                );
-              },
-              child: Text("Accounts"),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: PocketsAccountHero(
+                height: MediaQuery.of(context).size.height * 0.4,
+                amount: 5000,
+              ),
             ),
-            MaterialButton(
-              onPressed: () {
-                final accountBox = Boxes.getAccounts();
-                accountBox.add(
-                  Account(
-                    name: "Test Account",
-                    amount: 5000,
-                  ),
-                );
-              },
-              child: Text("Add"),
-            ),
-            MaterialButton(
-              onPressed: () {},
-              child: Text("Deduct"),
-            ),
+            Row(
+              children: [
+                MaterialButton(
+                  onPressed: () {},
+                  child: Text("Add"),
+                ),
+                MaterialButton(
+                  onPressed: () async {
+                    final accountBox = Boxes.getAccounts();
+                    await accountBox.clear();
+                  },
+                  child: Text("Deduct"),
+                ),
+              ],
+            )
           ],
         ),
       ),

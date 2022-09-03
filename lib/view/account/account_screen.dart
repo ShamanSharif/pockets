@@ -3,6 +3,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pockets/controller/hive/boxes.dart';
 import 'package:pockets/model/hive/account.dart';
+import 'package:pockets/view/account/add_account.dart';
+import 'package:pockets/view/model/pockets_account_card.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -27,22 +29,34 @@ class _AccountScreenState extends State<AccountScreen> {
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const AddAccountScreen();
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
   Widget buildAccountsWidget(List<Account> accounts) {
-    return Column(
-      children: [
-        for (Account account in accounts)
-          Container(
-            child: Column(
-              children: [
-                Text(account.name),
-                Text(account.amount.toString()),
-              ],
-            ),
-          )
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          for (Account account in accounts)
+            PocketsAccountCard(
+              name: account.name,
+              amount: account.amount,
+            )
+        ],
+      ),
     );
   }
 }
