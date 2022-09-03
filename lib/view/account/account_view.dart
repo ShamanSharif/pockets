@@ -81,7 +81,7 @@ class _AccountViewScreenState extends State<AccountViewScreen> {
                             ),
                           );
                         },
-                        child: const Text("Deduct"),
+                        child: const Text("Delete"),
                       ),
                     ),
                   ],
