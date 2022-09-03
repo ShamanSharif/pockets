@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:pockets/controller/hive/boxes.dart';
+import 'package:pockets/model/hive/account.dart';
+import 'package:pockets/view/account/accounts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,11 +28,26 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AccountScreen(),
+                  ),
+                );
+              },
               child: Text("Accounts"),
             ),
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                final accountBox = Boxes.getAccounts();
+                accountBox.add(
+                  Account(
+                    name: "Test Account",
+                    amount: 5000,
+                  ),
+                );
+              },
               child: Text("Add"),
             ),
             MaterialButton(
