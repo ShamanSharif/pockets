@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pockets/controller/hive/boxes.dart';
 import 'package:pockets/model/hive/account.dart';
+import 'package:pockets/view/account/account_view.dart';
 import 'package:pockets/view/account/add_account.dart';
 import 'package:pockets/view/model/pockets_account_card.dart';
 
@@ -18,7 +18,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Accounts"),
+        title: const Text("Accounts"),
       ),
       body: SafeArea(
         child: ValueListenableBuilder<Box<Account>>(
@@ -30,7 +30,7 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
@@ -51,9 +51,23 @@ class _AccountScreenState extends State<AccountScreen> {
       child: Column(
         children: [
           for (Account account in accounts)
-            PocketsAccountCard(
-              name: account.name,
-              amount: account.amount,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccountViewScreen(
+                      account: account,
+                    ),
+                  ),
+                );
+              },
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              child: PocketsAccountCard(
+                name: account.name,
+                amount: account.amount,
+              ),
             )
         ],
       ),

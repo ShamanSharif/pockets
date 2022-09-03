@@ -13,4 +13,9 @@ class Account extends HiveObject {
     required this.name,
     required this.amount,
   });
+
+  @override
+  String toString() {
+    return name;
+  }
 }

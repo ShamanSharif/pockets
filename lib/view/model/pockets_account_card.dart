@@ -29,7 +29,7 @@ class PocketsAccountCard extends StatelessWidget {
                   ),
                   child: Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -39,7 +39,7 @@ class PocketsAccountCard extends StatelessWidget {
                   child: Text(
                     "$amount BDT",
                     textAlign: TextAlign.end,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w600,
                     ),
