@@ -54,6 +54,11 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        
+        // Enable 16KB page size support for Google Play compliance
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
+        }
     }
 
     buildTypes {
@@ -61,6 +66,13 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+    }
+    
+    // Enable 16KB page size support
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
         }
     }
 }
