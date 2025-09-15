@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:pockets/controller/hive/boxes.dart';
 import 'package:pockets/model/hive/account.dart';
@@ -7,7 +6,7 @@ import 'package:pockets/view/model/pocket_text_form_field.dart';
 import '../model/pockets_button.dart';
 
 class AddToAccount extends StatefulWidget {
-  const AddToAccount({Key? key}) : super(key: key);
+  const AddToAccount({super.key});
 
   @override
   State<AddToAccount> createState() => _AddToAccountState();
@@ -25,7 +24,7 @@ class _AddToAccountState extends State<AddToAccount> {
     super.initState();
   }
 
-  fetchFromDB() async {
+  Future<void> fetchFromDB() async {
     final box = Boxes.getAccounts();
     setState(() {
       accounts = box.values.toList();
@@ -76,9 +75,14 @@ class _AddToAccountState extends State<AddToAccount> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: DropdownSearch<Account>(
-                          items: accounts!,
-                          selectedItem: selectedAccount,
+                        child: DropdownButtonFormField<Account>(
+                          initialValue: selectedAccount,
+                          items: accounts!.map((Account account) {
+                            return DropdownMenuItem<Account>(
+                              value: account,
+                              child: Text(account.name),
+                            );
+                          }).toList(),
                           validator: (val) {
                             if (val == null) {
                               return "Please choose an account";
@@ -90,6 +94,16 @@ class _AddToAccountState extends State<AddToAccount> {
                               selectedAccount = account!;
                             });
                           },
+                          onChanged: (Account? newValue) {
+                            setState(() {
+                              selectedAccount = newValue;
+                            });
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                          ),
                         ),
                       ),
                       const Spacer(),
